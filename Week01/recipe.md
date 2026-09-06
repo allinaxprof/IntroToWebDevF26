@@ -1,4 +1,4 @@
-#B uttermilk Pancakes
+# Buttermilk Pancakes
 
 ## Ingredients
 - 1 1/2 cup - Flour
