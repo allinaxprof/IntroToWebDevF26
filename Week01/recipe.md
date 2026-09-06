@@ -1,6 +1,6 @@
-#Buttermilk Pancakes
+#B uttermilk Pancakes
 
-##Ingredients
+## Ingredients
 - 1 1/2 cup - Flour
 - 3 1/2 tsp - Baking Powder
 - 1 tbsp - Sugar
@@ -10,7 +10,7 @@
 - 1 - Egg (large)
 - 3 tbsp - Butter (melted)
 
-Directions
+## Directions
 1. Add the vinegar to the milk, mix, and set aside
 2. Combine and sift flour, baking powder, sugar, and salt together
 3. Combine whisked egg, milk mixture, and melted butter
