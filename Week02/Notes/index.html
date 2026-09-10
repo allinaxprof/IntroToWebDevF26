@@ -4,10 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Pancakes</title>
+        <style>
+            #top {
+                color: #007bff;
+            }
+        </style>
     </head>
     <body>
         <!-- my 1 h1 on this page (most important heading on the page) -->
-        <h1>Welcome to Our Class Cookbook</h1>
+        <h1 id="top">Welcome to Our Class Cookbook</h1>
 
         <h2>Pancakes</h2>
 
@@ -56,6 +61,96 @@
         >
         </a> -->
 
+        <!-- the form tag itself is not visible.  it wraps form elements and browser default behavior -->
+        <form name="contactUs" target="_self" method="GET">
+            <fieldset>
+                <!-- legend is title of form group/fieldset -->
+                <legend>Who is cooking?</legend>
+                <p>Directions i guess</p>
+
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name"/>
+
+                <br />
+                <br />
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required placeholder="First 5 characters" maxLength="5"/>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Set Up User Account</legend>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email"/>
+
+                <br />
+                <br />
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password"/>
+
+                <br />
+                <br />
+
+                <label for="userBio">User Bio:</label>
+                <textarea id="userBio" name="userBio" rows="4" cols="50" placeholder="Enter your bio"></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Choose your favorite pancake topping</legend>
+                <p>
+                    Check boxes allow the user to select more than oen value at once. Grouped
+                    checkboxes (aka for the same answer) all share the same name attribute.  The
+                    value attribute is what gets sent to the server if that checkbox is checked.
+                </p>
+
+                <label for="topping">Topping:</label>
+                <label><input type="checkbox" name="topping" value="syrup"></input>Syrup</label>
+                <label><input type="checkbox" name="topping" value="butter"></input>Butter</label>
+                <label><input type="checkbox" name="topping" value="fruit"></input>Fruit</label>
+                <label><input type="checkbox" name="topping" value="whippedCream"></input>Whipped Cream</label>
+
+            </fieldset>
+            <fieldset>
+                    <legend>Choose your favorite pancake topping</legend>
+                    <p>
+                        Radio buttons allow the user to select only one value at a time.  Grouped
+                        radio buttons (aka for the same answer) all share the same name attribute.  The
+                        value attribute is what gets sent to the server if that radio button is checked.
+                    </p>
+                <label for="second">Second topping:</label>
+                <label><input type="radio" name="second" value="syrup"></input>Syrup</label>
+                <label><input type="radio" name="second" value="butter"></input>Butter</label>
+                <label><input type="radio" name="second" value="fruit"></input>Fruit</label>
+                <label><input type="radio" name="second" value="whippedCream"></input>Whipped Cream</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Choose your favorite pancake topping</legend>
+                <p>
+                    A select dropdown allows the user to select only one value at a time.  The
+                    value attribute is what gets sent to the server if that option is selected.
+                </p>
+                <label for="third">Third topping:</label>
+                <select name="third" id="third">
+                    <option value="syrup">Syrup</option>
+                    <option value="butter">Butter</option>
+                    <option value="fruit">Fruit</option>
+                    <option value="whippedCream">Whipped Cream</option>
+                </select>   
+            </fieldset>
+
+            <fieldset>
+                <legend>Submit Form</legend>
+                <button role="button" disabled>Submit Form</button>
+                <input name="submit" value="submitForm" type="submit">
+                <button type="submit" disabled>Submit</button>
+            </fieldset>
+        </form>
+
         <a href="recipe.html" target="_self">View another recipe</a>
+        <p><a href="#top">Back to top</a></p>
     </body>
 </html>
