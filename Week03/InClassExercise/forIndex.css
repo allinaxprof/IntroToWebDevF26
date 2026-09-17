@@ -1,0 +1,47 @@
+body {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: #f77db5;
+    font-family: "Courier New", Courier, monospace;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navBar {
+    margin-left: 10rem;
+    padding: 0;
+    /* display: flex; */
+    list-style-type: none;
+    background: grey;
+    font-size: 0;
+}
+
+.navLink {
+    margin-right: 2rem;
+    padding: 0.5em;
+    display: inline-block;
+    background: white;
+    font-size: 1rem;
+}
+
+.navLink :hover {
+    background: #a7a7a7;
+}
+
+h1 {
+    color: #7a3b58;
+
+}
+
+h2 {
+    color: #a74673;
+    text-transform: capitalize;
+}
+
+p {
+    color: #df4289;
+    font-family: cursive;
+}
