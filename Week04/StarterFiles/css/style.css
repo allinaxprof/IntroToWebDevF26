@@ -1,0 +1,33 @@
+/* load font before using in stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+BE+WAL+Guides&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: "Playwrite BE WAL Guides", cursive;
+    background: url("../img/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    width: 900px;
+    margin: 0 auto;
+    font-size: 0;
+}
+
+.polaroid {
+    width: 260px;
+    margin: 20px;
+    display: inline-block;
+}
+
+.polaroid img {
+    width: 100%;
+    height: auto;
+    border: 10px solid #ccc;
+    border-bottom-width: 45px;
+}
+
