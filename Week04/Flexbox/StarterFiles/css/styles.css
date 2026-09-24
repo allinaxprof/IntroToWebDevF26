@@ -1,1 +1,96 @@
-/* We write this together in class. */
+/* 
+display flex is applied to the parent element, aka the thing that contains the items you want to stack.
+flex direction defaults to row
+flex-wrap defaults to nowrap, all items will squish into one row
+justify content - applied to container/element that displays flex [main axis]
+align items - applied to container/element that displays flex [cross axis]
+align-items defaults to stretch, which fills parent container height, unless the flex-items (children)
+have a defined height, then height wins
+*/
+
+* {
+    /* padding and border are included in the element's total width and height */
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid purple;
+    background-color: rgba(238, 130, 238, 0.5);
+    min-height: 400px;
+}
+
+.item {
+    width: 21%;
+    height: 300px;
+    border: 1px solid red;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.justify-start {
+    justify-content: flex-start;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.justify-even {
+    justify-content: space-evenly;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+/* align items = cross axis */
+
+.align-start {
+    align-items: flex-start;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.align-stretch {
+    align-items: stretch;
+}
+
+/* any direct children */
+.align-stretch > * {
+    height: auto;
+}
+
+.align-self {
+    align-self: stretch;
+    height: auto;
+}
