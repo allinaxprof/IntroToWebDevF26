@@ -22,17 +22,22 @@ html {
     width: 260px;
     margin: 20px;
     display: inline-block;
+    position: relative;
 }
 
 .polaroid img {
     width: 100%;
     height: auto;
     border: 10px solid #ccc;
-    border-bottom-width: 45px;
+    border-bottom-width: 55px;
 }
 
 .polaroid p {
     font-size: 1rem;
-    color: #fff;
-    margin-top: 10px;
+    color: #000;
+    bottom: 10px;
+    text-align: center;
+    position: absolute;
+    width: 280px;
+    position: absolute;
 }
