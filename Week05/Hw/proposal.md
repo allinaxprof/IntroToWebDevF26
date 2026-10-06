@@ -38,6 +38,7 @@ done well.  However, my website will feature clothing products instead.
     - Grid
 - Product cards
     - Flexbox
+    - Transitions
 - Text
     - Importing fonts
 
@@ -47,9 +48,6 @@ done well.  However, my website will feature clothing products instead.
 - In-page/jump links?
 
 ## Wireframe & Sitemap
-
-![hero of my site](./assets/my-site-hero.png)
-![opened navbar](./assets/my-site-navbar.png)
 
 ```mermaid
 graph LR
@@ -66,6 +64,11 @@ graph LR
     MAN --> STY["By Style"]
     MAN --> SAL
 
+    NEW --> PRO1["Product Page"]
+    SAL --> PRO4["Product Page"]
+    PIE --> PRO5["Product Page"]
+    STY --> PRO6["Product Page"]
+
     Footer --> DIS["Disclaimer"]
     Footer --> CON["Contact"]
     Footer --> OUR["Our Mission"]
@@ -73,3 +76,6 @@ graph LR
     Footer --> ACC
 
 ```
+
+![hero of my site](./assets/my-site-hero.png)
+![opened navbar](./assets/my-site-navbar.png)
