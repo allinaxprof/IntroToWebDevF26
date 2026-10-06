@@ -42,7 +42,8 @@ done well.  However, my website will feature clothing products instead.
     - Importing fonts
 
 ## Concepts to learn
-- Dropdown menus
+- Random variables (for random color picking)
+- Popups
 - In-page/jump links?
 
 ## Wireframe & Sitemap
