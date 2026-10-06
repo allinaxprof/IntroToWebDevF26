@@ -53,6 +53,7 @@ done well.  However, my website will feature clothing products instead.
 
 ```mermaid
 graph LR
+    Home --> NEW["NEW"]
     Home --> WOM["Woman's"]
     Home --> MAN["Men's"]
     Home --> CAR["My Cart"]
@@ -60,8 +61,10 @@ graph LR
 
     WOM --> PIE["By Piece"]
     WOM --> STY["By Style"]
+    WOM --> SAL["SALE"]
     MAN --> PIE["By Piece"]
     MAN --> STY["By Style"]
+    MAN --> SAL
 
     Footer --> DIS["Disclaimer"]
     Footer --> CON["Contact"]
