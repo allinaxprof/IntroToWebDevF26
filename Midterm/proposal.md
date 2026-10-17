@@ -3,9 +3,9 @@
 ## Concept/Theme
 
 ### Anti-inspiration:
-![existing website that I hated](./assets/fake_shopping_hero.png)
-![bad search bar on that website](./assets/fake_shopping_search.png)
-![boring product displays](./assets/fake_shopping_products.png)
+![existing website that I hated](../Week05/Hw/assets/fake_shopping_hero.png)
+![bad search bar on that website](../Week05/Hw/assets/fake_shopping_search.png)
+![boring product displays](../Week05/Hw/assets/fake_shopping_products.png)
 
 ### Concept:
 
@@ -13,18 +13,18 @@ Even though I don't often shop online, I love the idea of fake shopping sites to
 retail therapy!  It reminded me of the joke website "Download More RAM" which is an example of a joke website
 done well.  However, my website will feature clothing products instead.
 
-![download more RAM ui](./assets/download_more_ram_ui.png)
+![download more RAM ui](../Week05/Hw/assets/download_more_ram_ui.png)
 
 ### Inspiration: 
 
-![cute y2k designs](./assets/bw_pixel_art.jpeg)
-![another cute y2k design](./assets/chaotic_layout_y2k.jpeg)
-![another cute minimalist design](./assets/minimal_cute_layout.jpeg)
+![cute y2k designs](../Week05/Hw/assets/bw_pixel_art.jpeg)
+![another cute y2k design](../Week05/Hw/assets/chaotic_layout_y2k.jpeg)
+![another cute minimalist design](../Week05/Hw/assets/minimal_cute_layout.jpeg)
 
 ## Existing websites
 
-![amazon's website ui](./assets/amazon_ui.jpg)
-![lewkin's website ui](./assets/lewkin_ui.png)
+![amazon's website ui](../Week05/Hw/assets/amazon_ui.jpg)
+![lewkin's website ui](../Week05/Hw/assets/lewkin_ui.png)
 
 ## Concepts used
 
@@ -77,5 +77,5 @@ graph LR
 
 ```
 
-![hero of my site](./assets/my-site-hero.png)
-![opened navbar](./assets/my-site-navbar.png)
+![hero of my site](../Week05/Hw/assets/my-site-hero.png)
+![opened navbar](../Week05/Hw/assets/my-site-navbar.png)

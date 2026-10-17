@@ -16,6 +16,10 @@ html, body {
     background-color: white;
 }
 
+main {
+    margin-bottom: 2rem;
+}
+
 /* navbar */
 header {
     display: flex;
@@ -110,9 +114,57 @@ header a {
     padding: 1rem;
     background-color: var(--accent-color);
     margin: 1rem;
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.3);
+    transition: all 0.1s;
+}
+
+.thumb:active {
+    transform: scale(0.95);
 }
 
 .thumb img {
     width: 200px;
     height: auto;
+}
+
+/* footer */
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    background-color: var(--accent-color);
+    padding: 2rem;
+    /* auto margin pushes the footer to the bottom on short pages */
+    margin-top: auto;
+}
+
+footer a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer-brand h2 {
+    font-size: 4rem;
+    font-weight: 300;
+    margin: 0 1rem;
+}
+
+.footer-logo {
+    width: auto;
+    height: 4rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
 }
