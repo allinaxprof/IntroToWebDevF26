@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Women's | IMBROKE</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <script src="./js/main.js"></script>
   </head>
   <body>
     <!-- navbar sticky to the top -->
@@ -17,16 +18,20 @@
         <h2><a href="./index.html">IMBROKE</a></h2>
       </div>
 
-      <!-- Two links in the center, evenly spaced between the logo on the left and the right side div -->
+      <!-- hamburger, hidden until phone size, toggles the links below -->
+      <span class="mobile-menu" id="mobile-menu" onclick="toggleShow()">&#8801;</span>
+
+      <!-- links in the center, evenly spaced between the logo on the left and the right side div -->
       <nav>
-        <ul class="menu">
+        <ul class="menu" id="menu">
+          <li><a href="./sale.html">SALE</a></li>
           <li><a href="./womens.html">Women's</a></li>
           <li><a href="./mens.html">Men's</a></li>
         </ul>
       </nav>
 
       <!-- right side, questionmark icon, a link to My Cart and link to account settings, placeholder Name Name -->
-      <div class="account">
+      <div class="account" id="account">
         <img class="icon" src="./img/questionmark.png" alt="Help" />
         <a href="./cart.html">My Cart</a>
         <a href="./account.html">Name Name</a>
@@ -35,6 +40,30 @@
 
     <main>
       <h1>Women's</h1>
+      <div class="container">
+        <a href="./product.html"><div class="thumb">
+          <!-- image inside is width: 260px for now -->
+          <img src="./img/redshirtsmall.png" alt="Red shirt" />
+          <!-- below image is p tag with product name, price, and sizes -->
+          <p>Red Shirt<br />$19.99<br />Sizes: S M L XL</p>
+        </div></a>
+        <a href="./product.html"><div class="thumb">
+          <img src="./img/blackjacketsmall.png" alt="Black jacket" />
+          <p>Black Jacket<br />$59.99<br />Sizes: S M L XL</p>
+        </div></a>
+        <a href="./product.html"><div class="thumb">
+          <img src="./img/blueshortsmall.png" alt="Blue shorts" />
+          <p>Blue Shorts<br />$24.99<br />Sizes: S M L XL</p>
+        </div></a>
+        <a href="./product.html"><div class="thumb">
+          <img src="./img/redshoesmall.png" alt="Red shoes" />
+          <p>Red Shoes<br />$44.99<br />Sizes: 6 7 8 9 10</p>
+        </div></a>
+        <a href="./product.html"><div class="thumb">
+          <img src="./img/redshoesmall.png" alt="Red shoes" />
+          <p>Red Shoes<br />$44.99<br />Sizes: 6 7 8 9 10</p>
+        </div></a>
+      </div>
     </main>
 
     <!-- footer, same color as the navbar, a grid of col 2 -->

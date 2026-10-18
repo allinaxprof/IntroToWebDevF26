@@ -54,6 +54,11 @@ header a {
     height: 30px;
 }
 
+/* hamburger is hidden until the phone media query */
+.mobile-menu {
+    display: none;
+}
+
 .menu {
     list-style: none;
     padding: 0;
@@ -129,13 +134,12 @@ header a {
 
 /* footer */
 footer {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     background-color: var(--accent-color);
     padding: 2rem;
-    /* auto margin pushes the footer to the bottom on short pages */
-    margin-top: auto;
 }
 
 footer a {
@@ -167,4 +171,82 @@ footer a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem 2rem;
+}
+
+/* Content */
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* tablet */
+@media screen and (max-width: 1024px) {
+
+
+}
+
+/* phone */
+@media screen and (max-width: 768px) {
+    .hero {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero img {
+
+        margin-top: 2rem;
+    }
+
+    .hero article {
+        text-align: center;
+    }
+
+    /* stack the navbar into a column */
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 0;
+    }
+
+    .brand {
+        justify-content: center;
+    }
+
+    .mobile-menu {
+        display: block;
+        color: var(--text-color);
+        font-size: 2rem;
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+        cursor: pointer;
+    }
+
+    /* links hidden until the hamburger adds the show class */
+    .menu, .account {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu.show, .account.show {
+        display: flex;
+    }
+
+    .menu li, .account a {
+        margin: 1rem 0;
+    }
+
+    .account .icon {
+        display: none;
+    }
+
+    .footer, .footer-links {
+        display: flex;
+        flex-direction: column;
+
+    }
+
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Product Page | IMBROKE</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <script src="./js/main.js"></script>
   </head>
   <body>
     <!-- navbar sticky to the top -->
@@ -17,16 +18,20 @@
         <h2><a href="./index.html">IMBROKE</a></h2>
       </div>
 
-      <!-- Two links in the center, evenly spaced between the logo on the left and the right side div -->
+      <!-- hamburger, hidden until phone size, toggles the links below -->
+      <span class="mobile-menu" id="mobile-menu" onclick="toggleShow()">&#8801;</span>
+
+      <!-- links in the center, evenly spaced between the logo on the left and the right side div -->
       <nav>
-        <ul class="menu">
+        <ul class="menu" id="menu">
+          <li><a href="./sale.html">SALE</a></li>
           <li><a href="./womens.html">Women's</a></li>
           <li><a href="./mens.html">Men's</a></li>
         </ul>
       </nav>
 
       <!-- right side, questionmark icon, a link to My Cart and link to account settings, placeholder Name Name -->
-      <div class="account">
+      <div class="account" id="account">
         <img class="icon" src="./img/questionmark.png" alt="Help" />
         <a href="./cart.html">My Cart</a>
         <a href="./account.html">Name Name</a>
