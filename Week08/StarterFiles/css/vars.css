@@ -1,0 +1,29 @@
+/* We write this together in class. */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+:root {
+    --c-bg: #e2e8f0;
+    --c-text: #475569;
+    --c-bg-btn: #1e293b;
+    --c-bg-btn-hover: #64748b;
+    --c-btn-text: #f8fafc;
+
+    --ff-heading: "Press Start 2P", "Helvetica", system-ui;
+    --ff-body: "Share Tech Mono", "Helvetica", system-ui;
+}
+
+#green {
+    --cc-bg: #a7f3d0;
+    --cc-text: #065f46;
+    --c-bg-btn: #059f46;
+    --c-bg-btn-hover: #047857;
+    --c-btn-text: #f8fafc;
+}
+
+#blue {
+    --cc-bg: #bfdbfe;
+    --cc-text: #1e3a8a;
+    --c-bg-btn: #1e3a8a;
+    --c-bg-btn-hover: #1e40af;
+    --c-btn-text: #f8fafc;
+}

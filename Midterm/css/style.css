@@ -209,7 +209,6 @@ h1 {
     border: 10px solid var(--accent-color);
 }
 
-/* column layout so the care instructions sit at the bottom */
 .product article {
     display: flex;
     flex-direction: column;
@@ -312,7 +311,6 @@ h1 {
         display: none;
     }
 
-    /* footer keeps only the logo and IMBROKE, links move to the mobile menu */
     footer {
         display: flex;
         justify-content: center;
@@ -330,7 +328,6 @@ h1 {
         height: 2.5rem;
     }
 
-    /* product page stacks into one column */
     .product {
         display: flex;
         flex-direction: column;
