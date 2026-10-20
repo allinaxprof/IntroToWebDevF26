@@ -54,8 +54,8 @@ header a {
     height: 30px;
 }
 
-/* hamburger is hidden until the phone media query */
-.mobile-menu {
+/* hamburger and footer links in the menu are hidden until the phone media query */
+.mobile-menu, .mobile-links {
     display: none;
 }
 
@@ -84,22 +84,37 @@ header a {
 /* hero */
 .hero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 100%;
     color: var(--text-color);
     background-color: var(--main-color);
     margin-bottom: 2rem;
+    text-align: right;
+    height: 50vh;
 }
 
 .hero img {
     width: 100%;
-    height: 50vh;
-    object-fit: contain;
+    height: 40vh;
+    object-fit: cover;
+    display: block;
+    /* center on cross-axis in the 50vh grid row */
+    align-self: center;
 }
 
 .hero article {
-    padding: 2rem;
-    text-align: right;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 300;
 }
 
 .hero p {
@@ -180,6 +195,45 @@ h1 {
     margin: 2rem 0;
 }
 
+/* product page */
+.product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.product img {
+    width: 40vw;
+    height: auto;
+    border: 10px solid var(--accent-color);
+}
+
+/* column layout so the care instructions sit at the bottom */
+.product article {
+    display: flex;
+    flex-direction: column;
+}
+
+.product h2 {
+    margin-top: 0;
+}
+
+.sizes a {
+    color: black;
+    font-weight: normal;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+.sizes a.active {
+    font-weight: bold;
+}
+
+.care {
+    margin-top: auto;
+}
+
 /* tablet */
 @media screen and (max-width: 1024px) {
 
@@ -191,15 +245,18 @@ h1 {
     .hero {
         display: flex;
         flex-direction: column;
+        height: auto;
     }
 
     .hero img {
-
-        margin-top: 2rem;
+        flex: 1;
+        min-height: 0;
     }
 
     .hero article {
+        height: auto;
         text-align: center;
+        padding: 1rem;
     }
 
     /* stack the navbar into a column */
@@ -231,7 +288,7 @@ h1 {
         align-items: center;
     }
 
-    .menu.show, .account.show {
+    .menu.show, .account.show, .mobile-links.show {
         display: flex;
     }
 
@@ -239,14 +296,47 @@ h1 {
         margin: 1rem 0;
     }
 
+    /* footer links */
+    .mobile-links {
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 1rem;
+    }
+
+    .mobile-links a {
+        margin: 0.75rem 0;
+        opacity: 0.75;
+    }
+
     .account .icon {
         display: none;
     }
 
-    .footer, .footer-links {
+    /* footer keeps only the logo and IMBROKE, links move to the mobile menu */
+    footer {
         display: flex;
-        flex-direction: column;
-
+        justify-content: center;
     }
 
+    .footer-links {
+        display: none;
+    }
+
+    .footer-brand h2 {
+        font-size: 2.5rem;
+    }
+
+    .footer-logo {
+        height: 2.5rem;
+    }
+
+    /* product page stacks into one column */
+    .product {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product img {
+        width: 100%;
+    }
 }

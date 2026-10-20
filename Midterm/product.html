@@ -36,10 +36,37 @@
         <a href="./cart.html">My Cart</a>
         <a href="./account.html">Name Name</a>
       </div>
+
+      <!-- footer links, hidden on desktop, shown at the bottom of the mobile menu -->
+      <div class="mobile-links" id="mobile-links">
+        <a href="./account.html">Account</a>
+        <a href="./careers.html">Careers</a>
+        <a href="./disclaimer.html">Disclaimer</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./mission.html">Our Mission</a>
+      </div>
     </header>
 
-    <main>
-      <h1>Product Page</h1>
+    <!-- product page, a grid of col 2 -->
+    <main class="product">
+      <!-- product image on the left, 40vw with a thick accent border -->
+      <img src="./img/redshirtsmall.png" alt="Red shirt" />
+
+      <!-- product info on the right, name at the top and care instructions at the bottom -->
+      <article>
+        <h2>Red Shirt</h2>
+        <p>description ssssssssssssss</p>
+
+        <!-- sizes link to nothing for now, the selected one has the active class and is bolded -->
+        <h3 class="sizes">
+          <a href="#" onclick="selectSize(this)">S</a>
+          <a href="#" class="active" onclick="selectSize(this)">M</a>
+          <a href="#" onclick="selectSize(this)">L</a>
+          <a href="#" onclick="selectSize(this)">XL</a>
+        </h3>
+
+        <p class="care">care instructions: ssssss ssssssssssssssss ssssssssssssssssssssssss ssssssssssssssssssss sssssssssssssss</p>
+      </article>
     </main>
 
     <!-- footer, same color as the navbar, a grid of col 2 -->
