@@ -49,6 +49,64 @@
 
     <main>
       <h1>My Cart</h1>
+
+      <!-- grid of 2 cols, products on the left (2fr) and checkout info on the right (1fr) -->
+      <div class="cart">
+        <section class="cart-items">
+        <div class="cart-item">
+          <img src="./img/redshirtsmall.png" alt="Red Shirt" />
+          <div>
+            <h3>Red Shirt</h3>
+            <p>Size: M</p>
+            <p>Qty: 1</p>
+          </div>
+          <p class="price">$19.99</p>
+        </div>
+        <div class="cart-item">
+          <img src="./img/blackjacketsmall.png" alt="Black Jacket" />
+          <div>
+            <h3>Black Jacket</h3>
+            <p>Size: L</p>
+            <p>Qty: 1</p>
+          </div>
+          <p class="price">$59.99</p>
+        </div>
+        <div class="cart-item">
+          <img src="./img/redshoesmall.png" alt="Red Shoes" />
+          <div>
+            <h3>Red Shoes</h3>
+            <p>Size: 8</p>
+            <p>Qty: 1</p>
+          </div>
+          <p class="price">$44.99</p>
+        </div>
+          <p class="cart-total">Total: <strong>$124.97</strong></p>
+        </section>
+
+        <!-- checkout card, every input is disabled and a hover card covers it -->
+        <section class="checkout">
+          <h2>Checkout</h2>
+          <form action="#">
+            <fieldset disabled>
+              <legend>Delivery</legend>
+              <input type="text" placeholder="Full name" />
+              <input type="text" placeholder="Street address" />
+              <input type="text" placeholder="City" />
+              <input type="text" placeholder="State" />
+              <input type="text" placeholder="ZIP code" />
+            </fieldset>
+            <fieldset disabled>
+              <legend>Billing</legend>
+              <input type="text" placeholder="Name on card" />
+              <input type="text" placeholder="Card number" />
+              <input type="text" placeholder="MM/YY" />
+              <input type="text" placeholder="CVC" />
+            </fieldset>
+            <button class="btn" type="button" disabled>Place Order</button>
+          </form>
+          <div class="checkout-overlay">Really trying to spend your money, huh?</div>
+        </section>
+      </div>
     </main>
 
     <!-- footer, same color as the navbar, a grid of col 2 -->

@@ -49,6 +49,25 @@
 
     <main>
       <h1>Contact</h1>
+
+      <form class="contact-form" action="#" method="POST">
+        <div class="row">
+          <label class="label-lg" for="name">Name:</label>
+          <input id="name" name="name" type="text" class="input-lg" required />
+        </div>
+        <div class="row">
+          <label class="label-lg" for="email">Email:</label>
+          <input id="email" name="email" type="text" class="input-lg" required />
+        </div>
+        <div class="message-area">
+          <label for="message" class="label-lg">Leave me a message!</label>
+          <textarea id="message" name="message" class="message" placeholder="Leave a comment or question here!" required></textarea>
+        </div>
+        <div class="button-bar">
+          <button class="btn-dark" type="submit">Send</button>
+        </div>
+        <input type="hidden" name="subject" value="New Submission From: {{name}}" />
+      </form>
     </main>
 
     <!-- footer, same color as the navbar, a grid of col 2 -->

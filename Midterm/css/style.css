@@ -1,8 +1,15 @@
 /* load fonts, variables, and other style sheets first */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Limelight&family=Londrina+Sketch&display=swap');
+
 :root {
     --main-color: #4a00e0;
     --accent-color: #b8a4f0;
     --text-color: white;
+    /* unicorn y2k pastels */
+    --blue: #7ec8ff;
+    --purple: #b48cff;
+    --pink: #ff9ad5;
+    --unicorn: linear-gradient(135deg, var(--blue), var(--purple), var(--pink));
 }
 
 * {
@@ -12,12 +19,17 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: Helvetica, sans-serif;
+    font-family: "IBM Plex Serif", Helvetica, sans-serif;
+    font-weight: 300;
     background-color: white;
 }
 
 main {
     margin-bottom: 2rem;
+}
+
+h1 {
+    font-family: "Limelight", Helvetica, sans-serif;
 }
 
 /* navbar */
@@ -87,7 +99,7 @@ header a {
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 100%;
     color: var(--text-color);
-    background-color: var(--main-color);
+    background: linear-gradient(120deg, #3a7bff, #8a3ffc, #ff5fb4);
     margin-bottom: 2rem;
     text-align: right;
     height: 50vh;
@@ -135,16 +147,41 @@ header a {
     background-color: var(--accent-color);
     margin: 1rem;
     box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.3);
-    transition: all 0.1s;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* card grows a little on hover */
+.thumb:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.3);
 }
 
 .thumb:active {
     transform: scale(0.95);
 }
 
+/* wrapper so the white filter only covers the image, not the text */
+.thumb-img {
+    position: relative;
+}
+
+.thumb-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.thumb:hover .thumb-img::after {
+    opacity: 0.4;
+}
+
 .thumb img {
     width: 200px;
     height: auto;
+    display: block;
 }
 
 /* footer */
@@ -231,6 +268,277 @@ h1 {
 
 .care {
     margin-top: auto;
+}
+
+/* buy buttons on the product page */
+.buy-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.btn {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--text-color);
+    background: var(--unicorn);
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-outline {
+    color: var(--main-color);
+    background: white;
+    border: 2px solid var(--purple);
+}
+
+/* popup that shows while either buy button is hovered */
+.hover-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: min(90vw, 400px);
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--main-color);
+    background: white;
+    border: 4px solid var(--purple);
+    border-radius: 20px;
+    /* dims the rest of the page */
+    box-shadow: 0 0 0 100vmax rgba(74, 0, 224, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    /* lets the mouse stay on the button underneath so it doesn't flicker */
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 20;
+}
+
+.btn:hover ~ .hover-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* text pages: account, careers, disclaimer, mission */
+.page-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    line-height: 1.6;
+}
+
+.page-content h2 {
+    font-weight: 400;
+    color: var(--main-color);
+}
+
+.info-card {
+    background-color: #f7f2ff;
+    border-left: 6px solid var(--purple);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-card h3 {
+    margin-top: 0;
+}
+
+/* my cart page */
+.cart {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    padding: 0 2rem;
+    align-items: start;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f7f2ff;
+    border-radius: 10px;
+}
+
+.cart-item img {
+    width: 120px;
+    height: auto;
+    border: 4px solid var(--accent-color);
+    border-radius: 6px;
+}
+
+.cart-item h3 {
+    margin: 0 0 0.5rem;
+}
+
+.cart-item p {
+    margin: 0.25rem 0;
+}
+
+.cart-item .price {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.cart-total {
+    text-align: right;
+    font-size: 1.25rem;
+}
+
+/* delivery + billing card */
+.checkout {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 20px;
+    background: var(--unicorn);
+    color: var(--text-color);
+}
+
+.checkout h2 {
+    margin-top: 0;
+    font-weight: 400;
+}
+
+.checkout fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 1rem;
+}
+
+.checkout legend {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.checkout input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-family: inherit;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.checkout .btn {
+    width: 100%;
+    background: white;
+    color: var(--main-color);
+}
+
+.checkout .btn:disabled {
+    cursor: not-allowed;
+}
+
+/* covers the whole card on hover */
+.checkout-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    font-family: "Limelight", Helvetica, sans-serif;
+    font-size: 1.75rem;
+    color: var(--main-color);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.checkout:hover .checkout-overlay {
+    opacity: 1;
+}
+
+/* contact form */
+.contact-form {
+    width: 50vw;
+    margin: auto;
+    padding: 2rem;
+    border-radius: 24px;
+    background: var(--unicorn);
+    color: var(--text-color);
+    box-shadow: 0 8px 24px rgba(180, 140, 255, 0.5);
+}
+
+.contact-form .row,
+.contact-form .message-area {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.label-lg {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+.contact-form input,
+.contact-form textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: var(--main-color);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.contact-form ::placeholder {
+    color: var(--purple);
+}
+
+.button-bar {
+    text-align: right;
+}
+
+.btn-dark {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 999px;
+    background-color: white;
+    color: var(--main-color);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-dark:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(74, 0, 224, 0.3);
 }
 
 /* tablet */
@@ -335,5 +643,28 @@ h1 {
 
     .product img {
         width: 100%;
+    }
+
+    .contact-form {
+        width: 90vw;
+    }
+
+    .cart {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 1rem;
+    }
+
+    .cart-item {
+        grid-template-columns: 80px 1fr;
+    }
+
+    .cart-item img {
+        width: 80px;
+    }
+
+    .page-content {
+        padding: 0 1rem;
     }
 }
