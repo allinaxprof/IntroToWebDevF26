@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outfit Generator</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+
+    <article class="outfit-generator">
+      <header class="heading">
+        <p class="presents">Outfit Generator</p>
+        <h1 class="billing" id="billing"></h1>
+        <p class="where-when" id="who"></p>
+      </header>
+
+      <p class="status" id="status"></p>
+
+      <section class="order">
+        <h2>Receipt</h2>
+
+        <p class="line" id="price-line"></p>
+        <p class="line" id="fee-line"></p>
+
+        <p class="total">
+          <span>Total</span>
+          <strong id="total"></strong>
+        </p>
+
+        <p class="fine-print" id="fine-print"></p>
+      </section>
+
+      <section class="lineup-wrap">
+        <h2>Your outfit</h2>
+        <ul class="lineup" id="lineup"></ul>
+        <p class="tagline" id="tagline"></p>
+      </section>
+    </article>
+
+    <script>
+
+      function pickRandom(array) {
+        return array[Math.floor(Math.random() * array.length)]
+      }
+
+      function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+
+      const tops = [['purple tank', 15], ['white shirt', 20], ['pink blouse', 25]]
+      const bottoms = [['black sweatpants', 30], ['brown slacks', 35], ['blue jeans', 20], ['grey skirt', 20], ['white shorts', 15]]
+      const shoes = [['dress shoes', 50], ['sneakers', 45], ['boots', 75], ['flats', 35]]
+      const schoolShoes = [shoes[0], shoes[3]] // dress shoes or flats only
+
+      const colours = ['#e0504f', '#7b5ea7', '#2a9d8f', '#e07a1f', '#d64f8c']
+      document.body.style.setProperty('--accent', pickRandom(colours))
+
+      const age = randomBetween(14, 30)
+      const wallet = randomBetween(50, 200)
+      const taxRate = 0.08875
+
+      const isStudent = age < 22
+
+      const shirt = pickRandom(tops)
+      const bottom = pickRandom(bottoms)
+      // ternary: students must wear dress shoes or flats
+      const shoe = isStudent ? pickRandom(schoolShoes) : pickRandom(shoes)
+
+      const outfit = [shirt, bottom, shoe]
+
+      const subtotal = shirt[1] + bottom[1] + shoe[1]
+      const tax = subtotal * taxRate
+      const total = subtotal + tax
+      const remaining = wallet - total
+
+      // worked-out booleans #2 and #3
+      const isOverBudget = total > wallet
+      const isAlmostOver = remaining < 20
+
+
+      let status
+
+      if (isOverBudget) {
+        // remaining is negative here, so flip it
+        status = `Not enough money — $${(-remaining).toFixed(2)} short`
+      } else if (isAlmostOver) {
+        status = `Balance low — $${remaining.toFixed(2)} left`
+      } else {
+        status = 'You can afford it!'
+      }
+
+      document.querySelector('#billing').textContent = `${shirt[0]}, ${bottom[0]} & ${shoe[0]}`
+      document.querySelector('#who').textContent = `Age ${age} · ${isStudent ? 'student' : 'not a student'} · $${wallet.toFixed(2)} in wallet`
+      document.querySelector('#status').textContent = status
+      document.querySelector('#price-line').textContent = `${outfit.length} items  —  $${subtotal.toFixed(2)}`
+      document.querySelector('#fee-line').textContent = `Sales tax (${(taxRate * 100).toFixed(3)}%)  —  $${tax.toFixed(2)}`
+      document.querySelector('#total').textContent = `$${total.toFixed(2)}`
+      document.querySelector('#fine-print').textContent = isStudent
+        ? 'Student dress code: dress shoes or flats only'
+        : 'All sales final'
+
+      // for loop builds the list; % stripes every other row
+      let html = ''
+      for (let i = 0; i < outfit.length; i++) {
+        const stripe = i % 2 === 1 ? 'stripe' : ''
+        html += `<li class="${stripe}"><span class="time">$${outfit[i][1].toFixed(2)}</span>${outfit[i][0]}</li>`
+      }
+      document.querySelector('#lineup').innerHTML = html
+
+      document.querySelector('#tagline').textContent = isOverBudget
+        ? 'Over budget'
+        : `You have $${remaining.toFixed(2)} remaining`
+    </script>
+  </body>
+</html>
