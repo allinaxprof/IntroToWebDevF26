@@ -39,7 +39,47 @@
     <!-- The script goes at the END of the body, after the elements it talks
          to. Put it in the <head> and it runs before they exist. -->
     <script>
-      // We write all of this together in class.
+      /* =========================
+        facts about the show
+      ========================= */
+      const headliner = "bad moon rising"
+      const support = "the paper cuts"
+      const venue = "the fillmore east"
+      const doors = "friday 13 nov, doors 8pm"
+
+      const ticketPrice = 18.5
+      const capacity = 250
+      const ticketSold = 243
+      const serviceRateFee = 0.12
+      const studentPrice = 5
+
+      const isStudent = false
+
+      const quantity = 3
+
+      const ticketsLeft = capacity - ticketSold
+
+      const subtotal = ticketPrice * quantity
+      const serviceFee = subtotal * serviceRateFee
+      const discount = isStudent ? studentPrice : 0
+
+      const total = subtotal + serviceFee - discount
+
+      const billing = `${headliner.toUpperCase()} + ${support}`
+      const whereWhen = `${venue} * ${doors}`
+      const priceLine = `${quantity} x ${ticketPrice.toFixed(2)}`
+
+      const feeLine = `Service Fee: $${serviceFee.toFixed(2)}`
+      const discountLine = isStudent ? `Student Discount: $${discount.toFixed(2)}` : ''
+      const totalLine = `$${total.toFixed(2)}`
+
+      document.querySelector('#billing').textContent = billing
+      document.querySelector('#where-when').textContent = whereWhen
+      document.querySelector('#price-line').textContent = priceLine
+      document.querySelector('#fee-line').textContent = feeLine
+      document.querySelector('#discount-line').textContent = discountLine
+      document.querySelector('#total').textContent = totalLine
+
     </script>
   </body>
 </html>
