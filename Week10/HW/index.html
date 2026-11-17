@@ -22,6 +22,7 @@
         <h2>Receipt</h2>
 
         <p class="line" id="price-line"></p>
+        <p class="line discount" id="discount-line"></p>
         <p class="line" id="fee-line"></p>
 
         <p class="total">
@@ -37,6 +38,26 @@
         <ul class="lineup" id="lineup"></ul>
         <p class="tagline" id="tagline"></p>
       </section>
+
+      <section class="controls">
+        <h2>Change it up</h2>
+
+        <div class="qty">
+          <span class="qty-label">Wallet</span>
+          <button type="button" id="minus" aria-label="Take $10 out">−</button>
+          <span class="count" id="wallet-count"></span>
+          <button type="button" id="plus" aria-label="Add $10">+</button>
+        </div>
+
+        <div class="promo">
+          <label for="promo">Promo code</label>
+          <input type="text" id="promo" placeholder="Try STYLE" autocomplete="off" />
+          <p class="promo-msg" id="promo-msg"></p>
+        </div>
+
+        <button type="button" class="roll" id="roll">Roll a new outfit</button>
+        <button type="button" class="reset" id="reset">Reset</button>
+      </section>
     </article>
 
     <script>
@@ -49,69 +70,158 @@
         return Math.floor(Math.random() * (max - min + 1)) + min
       }
 
+      // --- things that never change: const ---
       const tops = [['purple tank', 15], ['white shirt', 20], ['pink blouse', 25]]
       const bottoms = [['black sweatpants', 30], ['brown slacks', 35], ['blue jeans', 20], ['grey skirt', 20], ['white shorts', 15]]
       const shoes = [['dress shoes', 50], ['sneakers', 45], ['boots', 75], ['flats', 35]]
       const schoolShoes = [shoes[0], shoes[3]] // dress shoes or flats only
 
       const colours = ['#e0504f', '#7b5ea7', '#2a9d8f', '#e07a1f', '#d64f8c']
-      document.body.style.setProperty('--accent', pickRandom(colours))
-
-      const age = randomBetween(14, 30)
-      const wallet = randomBetween(50, 200)
       const taxRate = 0.08875
 
-      const isStudent = age < 22
+      const WALLET_STEP = 10
+      const MIN_WALLET = 0
+      const MAX_WALLET = 300
 
-      const shirt = pickRandom(tops)
-      const bottom = pickRandom(bottoms)
-      // ternary: students must wear dress shoes or flats
-      const shoe = isStudent ? pickRandom(schoolShoes) : pickRandom(shoes)
+      const PROMO_CODE = 'STYLE'
+      const promoRate = 0.15
 
-      const outfit = [shirt, bottom, shoe]
+      // --- STATE: everything that can change lives here, in `let` ---
+      let accent
+      let age
+      let wallet
+      let shirt
+      let bottom
+      let shoe
+      let promoCode = ''
 
-      const subtotal = shirt[1] + bottom[1] + shoe[1]
-      const tax = subtotal * taxRate
-      const total = subtotal + tax
-      const remaining = wallet - total
+      // what the page looked like when it first loaded, for the reset button
+      let startingOutfit
 
-      // worked-out booleans #2 and #3
-      const isOverBudget = total > wallet
-      const isAlmostOver = remaining < 20
-
-
-      let status
-
-      if (isOverBudget) {
-        // remaining is negative here, so flip it
-        status = `Not enough money — $${(-remaining).toFixed(2)} short`
-      } else if (isAlmostOver) {
-        status = `Balance low — $${remaining.toFixed(2)} left`
-      } else {
-        status = 'You can afford it!'
+      // new random facts only -- no drawing in here
+      function rollNewOutfit() {
+        accent = pickRandom(colours)
+        age = randomBetween(14, 30)
+        wallet = randomBetween(5, 20) * WALLET_STEP // $50 to $200, in steps of $10
+        shirt = pickRandom(tops)
+        bottom = pickRandom(bottoms)
+        // ternary: students must wear dress shoes or flats
+        shoe = age < 22 ? pickRandom(schoolShoes) : pickRandom(shoes)
       }
 
-      document.querySelector('#billing').textContent = `${shirt[0]}, ${bottom[0]} & ${shoe[0]}`
-      document.querySelector('#who').textContent = `Age ${age} · ${isStudent ? 'student' : 'not a student'} · $${wallet.toFixed(2)} in wallet`
-      document.querySelector('#status').textContent = status
-      document.querySelector('#price-line').textContent = `${outfit.length} items  —  $${subtotal.toFixed(2)}`
-      document.querySelector('#fee-line').textContent = `Sales tax (${(taxRate * 100).toFixed(3)}%)  —  $${tax.toFixed(2)}`
-      document.querySelector('#total').textContent = `$${total.toFixed(2)}`
-      document.querySelector('#fine-print').textContent = isStudent
-        ? 'Student dress code: dress shoes or flats only'
-        : 'All sales final'
+      // draws the whole page from the state above
+      function render() {
+        const isStudent = age < 22
+        const outfit = [shirt, bottom, shoe]
 
-      // for loop builds the list; % stripes every other row
-      let html = ''
-      for (let i = 0; i < outfit.length; i++) {
-        const stripe = i % 2 === 1 ? 'stripe' : ''
-        html += `<li class="${stripe}"><span class="time">$${outfit[i][1].toFixed(2)}</span>${outfit[i][0]}</li>`
+        const subtotal = shirt[1] + bottom[1] + shoe[1]
+        const promoIsValid = promoCode === PROMO_CODE
+        const discount = promoIsValid ? subtotal * promoRate : 0
+        const tax = (subtotal - discount) * taxRate
+        const total = subtotal - discount + tax
+        const remaining = wallet - total
+
+        const isOverBudget = total > wallet
+        const isAlmostOver = remaining < 20
+
+        let status
+        if (isOverBudget) {
+          // remaining is negative here, so flip it
+          status = `Not enough money — $${(-remaining).toFixed(2)} short`
+        } else if (isAlmostOver) {
+          status = `Balance low — $${remaining.toFixed(2)} left`
+        } else {
+          status = 'You can afford it!'
+        }
+
+        document.body.style.setProperty('--accent', accent)
+        document.querySelector('#billing').textContent = `${shirt[0]}, ${bottom[0]} & ${shoe[0]}`
+        document.querySelector('#who').textContent = `Age ${age} · ${isStudent ? 'student' : 'not a student'} · $${wallet.toFixed(2)} in wallet`
+        document.querySelector('#status').textContent = status
+        document.querySelector('#price-line').textContent = `${outfit.length} items  —  $${subtotal.toFixed(2)}`
+        document.querySelector('#discount-line').textContent = promoIsValid
+          ? `Promo ${PROMO_CODE} (${promoRate * 100}% off)  —  −$${discount.toFixed(2)}`
+          : ''
+        document.querySelector('#fee-line').textContent = `Sales tax (${(taxRate * 100).toFixed(3)}%)  —  $${tax.toFixed(2)}`
+        document.querySelector('#total').textContent = `$${total.toFixed(2)}`
+        document.querySelector('#fine-print').textContent = isStudent
+          ? 'Student dress code: dress shoes or flats only'
+          : 'All sales final'
+
+        // for loop builds the list; % stripes every other row
+        let html = ''
+        for (let i = 0; i < outfit.length; i++) {
+          const stripe = i % 2 === 1 ? 'stripe' : ''
+          html += `<li class="${stripe}"><span class="time">$${outfit[i][1].toFixed(2)}</span>${outfit[i][0]}</li>`
+        }
+        document.querySelector('#lineup').innerHTML = html
+
+        document.querySelector('#tagline').textContent = isOverBudget
+          ? 'Over budget'
+          : `You have $${remaining.toFixed(2)} remaining`
+
+        // controls: the guard shows on the page as a disabled button
+        document.querySelector('#wallet-count').textContent = `$${wallet}`
+        document.querySelector('#minus').disabled = wallet <= MIN_WALLET
+        document.querySelector('#plus').disabled = wallet >= MAX_WALLET
+
+        let promoMessage = ''
+        if (promoIsValid) {
+          promoMessage = `Code applied — you save $${discount.toFixed(2)}`
+        } else if (promoCode !== '') {
+          promoMessage = 'Not a valid code'
+        }
+        document.querySelector('#promo-msg').textContent = promoMessage
+        document.querySelector('#promo-msg').className = promoIsValid ? 'promo-msg ok' : 'promo-msg'
       }
-      document.querySelector('#lineup').innerHTML = html
 
-      document.querySelector('#tagline').textContent = isOverBudget
-        ? 'Over budget'
-        : `You have $${remaining.toFixed(2)} remaining`
+      // --- handlers: change the state, then render ---
+      function handlePlus() {
+        if (wallet < MAX_WALLET) {
+          wallet = wallet + WALLET_STEP
+          render()
+        }
+      }
+
+      function handleMinus() {
+        if (wallet > MIN_WALLET) {
+          wallet = wallet - WALLET_STEP
+          render()
+        }
+      }
+
+      function handlePromo(event) {
+        promoCode = event.target.value.trim().toUpperCase()
+        render()
+      }
+
+      function handleRoll() {
+        rollNewOutfit()
+        render()
+      }
+
+      // go further: put everything back the way it was on load
+      function handleReset() {
+        accent = startingOutfit.accent
+        age = startingOutfit.age
+        wallet = startingOutfit.wallet
+        shirt = startingOutfit.shirt
+        bottom = startingOutfit.bottom
+        shoe = startingOutfit.shoe
+        promoCode = ''
+        document.querySelector('#promo').value = '' // the input has to be cleared too
+        render()
+      }
+
+      document.querySelector('#plus').addEventListener('click', handlePlus)
+      document.querySelector('#minus').addEventListener('click', handleMinus)
+      document.querySelector('#promo').addEventListener('input', handlePromo)
+      document.querySelector('#roll').addEventListener('click', handleRoll)
+      document.querySelector('#reset').addEventListener('click', handleReset)
+
+      rollNewOutfit()
+      startingOutfit = { accent, age, wallet, shirt, bottom, shoe }
+      render()
     </script>
   </body>
 </html>
