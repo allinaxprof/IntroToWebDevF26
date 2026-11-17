@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outfit Generator</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+
+    <article class="outfit-generator">
+      <header class="heading">
+        <p class="presents">Outfit Generator</p>
+        <h1 class="billing" id="billing"></h1>
+        <p class="where-when" id="who"></p>
+      </header>
+
+      <p class="status" id="status"></p>
+
+      <section class="order">
+        <h2>Receipt</h2>
+
+        <p class="line" id="price-line"></p>
+        <p class="line discount" id="discount-line"></p>
+        <p class="line" id="fee-line"></p>
+
+        <p class="total">
+          <span>Total</span>
+          <strong id="total"></strong>
+        </p>
+
+        <p class="fine-print" id="fine-print"></p>
+      </section>
+
+      <section class="lineup-wrap">
+        <h2>Your outfit</h2>
+        <ul class="lineup" id="lineup"></ul>
+        <p class="tagline" id="tagline"></p>
+      </section>
+
+      <section class="details-wrap">
+        <h2>Details</h2>
+        <dl class="details" id="details"></dl>
+      </section>
+
+      <section class="controls">
+        <h2>Change it up</h2>
+
+        <div class="qty">
+          <span class="qty-label">Wallet</span>
+          <button type="button" id="minus" aria-label="Take $10 out">−</button>
+          <span class="count" id="wallet-count"></span>
+          <button type="button" id="plus" aria-label="Add $10">+</button>
+        </div>
+
+        <div class="promo">
+          <label for="promo">Promo code</label>
+          <input type="text" id="promo" placeholder="Try STYLE" autocomplete="off" />
+          <p class="promo-msg" id="promo-msg"></p>
+        </div>
+
+        <button type="button" class="roll" id="roll">Roll a new outfit</button>
+        <button type="button" class="reset" id="reset">Reset</button>
+        <button type="button" class="reset" id="clear-save">Clear saved outfit</button>
+        <p class="save-note" id="save-note"></p>
+      </section>
+    </article>
+
+    <script>
+      // part b: after a reload the saved outfit came back with all its data but no subtotal() or summary(),
+      // calling one threw "saved.subtotal is not a function" because JSON.stringify drops functions.
+      // fix: use the saved name to find the real outfit in the array, which still has its methods
+
+      function pickRandom(array) {
+        return array[Math.floor(Math.random() * array.length)]
+      }
+
+      function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+
+      function subtotal() {
+        let sum = 0
+        for (let i = 0; i < this.items.length; i++) {
+          sum = sum + this.items[i].price
+        }
+        return sum
+      }
+
+      function summary() {
+        return `${this.items.length} items, $${this.subtotal().toFixed(2)} before tax`
+      }
+
+      const outfits = [
+        {
+          name: 'Campus Classic',
+          items: [
+            { name: 'white shirt', price: 20 },
+            { name: 'brown slacks', price: 35 },
+            { name: 'dress shoes', price: 50 },
+          ],
+          schoolSafe: true,
+          rating: 4,
+          accent: '#2a9d8f',
+          details: { season: 'Fall', occasion: 'Class presentation', vibe: 'Put together' },
+          subtotal,
+          summary,
+        },
+        {
+          name: 'Lazy Sunday',
+          items: [
+            { name: 'purple tank', price: 15 },
+            { name: 'black sweatpants', price: 30 },
+            { name: 'sneakers', price: 45 },
+          ],
+          schoolSafe: false,
+          rating: 5,
+          accent: '#7b5ea7',
+          details: { season: 'Any', occasion: 'Brunch and errands', vibe: 'Comfy' },
+          subtotal,
+          summary,
+        },
+        {
+          name: 'Gallery Opening',
+          items: [
+            { name: 'pink blouse', price: 25 },
+            { name: 'grey skirt', price: 20 },
+            { name: 'flats', price: 35 },
+          ],
+          schoolSafe: true,
+          rating: 4,
+          accent: '#d64f8c',
+          details: { season: 'Spring', occasion: 'Evening out', vibe: 'Artsy' },
+          subtotal,
+          summary,
+        },
+        {
+          name: 'Weekend Hike',
+          items: [
+            { name: 'white shirt', price: 20 },
+            { name: 'blue jeans', price: 20 },
+            { name: 'boots', price: 75 },
+          ],
+          schoolSafe: false,
+          rating: 3,
+          accent: '#e07a1f',
+          details: { season: 'Fall', occasion: 'Upstate day trip', vibe: 'Outdoorsy' },
+          subtotal,
+          summary,
+        },
+        {
+          name: 'Beach Day',
+          items: [
+            { name: 'purple tank', price: 15 },
+            { name: 'white shorts', price: 15 },
+            { name: 'sneakers', price: 45 },
+          ],
+          schoolSafe: false,
+          rating: 4,
+          accent: '#e0504f',
+          details: { season: 'Summer', occasion: 'Coney Island', vibe: 'Sunny' },
+          subtotal,
+          summary,
+        },
+        {
+          name: 'Study Session',
+          items: [
+            { name: 'pink blouse', price: 25 },
+            { name: 'blue jeans', price: 20 },
+            { name: 'flats', price: 35 },
+          ],
+          schoolSafe: true,
+          rating: 3,
+          accent: '#2a9d8f',
+          details: { season: 'Winter', occasion: 'Library all day', vibe: 'Low key' },
+          subtotal,
+          summary,
+        },
+      ]
+
+      // dress code: students only get school-safe outfits
+      const schoolOutfits = []
+      for (let i = 0; i < outfits.length; i++) {
+        if (outfits[i].schoolSafe) {
+          schoolOutfits.push(outfits[i])
+        }
+      }
+
+      const taxRate = 0.08875
+
+      const WALLET_STEP = 10
+      const MIN_WALLET = 0
+      const MAX_WALLET = 300
+
+      const PROMO_CODE = 'STYLE'
+      const promoRate = 0.15
+
+      const OUTFIT_KEY = 'outfit'
+      const SHOPPER_KEY = 'shopper'
+
+      // state
+      let outfit
+      let shopper
+      let promoCode = ''
+
+      let startingOutfit
+      let startingShopper
+
+      function rollNewOutfit() {
+        shopper = {
+          age: randomBetween(14, 30),
+          wallet: randomBetween(5, 20) * WALLET_STEP,
+        }
+        outfit = shopper.age < 22 ? pickRandom(schoolOutfits) : pickRandom(outfits)
+      }
+
+      function saveOutfit() {
+        localStorage.setItem(OUTFIT_KEY, JSON.stringify(outfit))
+        localStorage.setItem(SHOPPER_KEY, JSON.stringify(shopper))
+      }
+
+      function clearSave() {
+        localStorage.removeItem(OUTFIT_KEY)
+        localStorage.removeItem(SHOPPER_KEY)
+      }
+
+      function hasSave() {
+        return localStorage.getItem(OUTFIT_KEY) !== null
+      }
+
+      // the saved copy has no methods, so use the real outfit from the array
+      function findOutfit(name) {
+        for (let i = 0; i < outfits.length; i++) {
+          if (outfits[i].name === name) {
+            return outfits[i]
+          }
+        }
+        return null
+      }
+
+      function loadSave() {
+        const rawOutfit = localStorage.getItem(OUTFIT_KEY)
+        const rawShopper = localStorage.getItem(SHOPPER_KEY)
+
+        if (rawOutfit && rawShopper) {
+          const savedOutfit = JSON.parse(rawOutfit)
+          const realOutfit = findOutfit(savedOutfit.name)
+
+          if (realOutfit) {
+            outfit = realOutfit
+            shopper = JSON.parse(rawShopper)
+            return true
+          }
+        }
+        return false
+      }
+
+      function render() {
+        const isStudent = shopper.age < 22
+
+        const subtotal = outfit.subtotal()
+        const promoIsValid = promoCode === PROMO_CODE
+        const discount = promoIsValid ? subtotal * promoRate : 0
+        const tax = (subtotal - discount) * taxRate
+        const total = subtotal - discount + tax
+        const remaining = shopper.wallet - total
+
+        const isOverBudget = total > shopper.wallet
+        const isAlmostOver = remaining < 20
+
+        let status
+        if (isOverBudget) {
+          // remaining is negative here, so flip it
+          status = `Not enough money — $${(-remaining).toFixed(2)} short`
+        } else if (isAlmostOver) {
+          status = `Balance low — $${remaining.toFixed(2)} left`
+        } else {
+          status = 'You can afford it!'
+        }
+
+        document.body.style.setProperty('--accent', outfit.accent)
+        document.querySelector('#billing').textContent = outfit.name
+        document.querySelector('#who').textContent = `Age ${shopper.age} · ${isStudent ? 'student' : 'not a student'} · $${shopper.wallet.toFixed(2)} in wallet`
+        document.querySelector('#status').textContent = status
+        document.querySelector('#price-line').textContent = outfit.summary()
+        document.querySelector('#discount-line').textContent = promoIsValid
+          ? `Promo ${PROMO_CODE} (${promoRate * 100}% off)  —  −$${discount.toFixed(2)}`
+          : ''
+        document.querySelector('#fee-line').textContent = `Sales tax (${(taxRate * 100).toFixed(3)}%)  —  $${tax.toFixed(2)}`
+        document.querySelector('#total').textContent = `$${total.toFixed(2)}`
+        document.querySelector('#fine-print').textContent = isStudent
+          ? 'Student dress code: school-safe outfits only'
+          : 'All sales final'
+
+        // for loop builds the list; % stripes every other row
+        let html = ''
+        for (let i = 0; i < outfit.items.length; i++) {
+          const stripe = i % 2 === 1 ? 'stripe' : ''
+          html += `<li class="${stripe}"><span class="time">$${outfit.items[i].price.toFixed(2)}</span>${outfit.items[i].name}</li>`
+        }
+        document.querySelector('#lineup').innerHTML = html
+
+        document.querySelector('#tagline').textContent = isOverBudget
+          ? 'Over budget'
+          : `You have $${remaining.toFixed(2)} remaining`
+
+        // grows with any key added to details
+        const detailKeys = Object.keys(outfit.details)
+        let detailsHtml = `<div><dt>Rating</dt><dd>${'★'.repeat(outfit.rating)}${'☆'.repeat(5 - outfit.rating)}</dd></div>`
+        for (let i = 0; i < detailKeys.length; i++) {
+          const detailKey = detailKeys[i]
+          detailsHtml += `<div><dt>${detailKey}</dt><dd>${outfit.details[detailKey]}</dd></div>`
+        }
+        document.querySelector('#details').innerHTML = detailsHtml
+
+        document.querySelector('#wallet-count').textContent = `$${shopper.wallet}`
+        document.querySelector('#minus').disabled = shopper.wallet <= MIN_WALLET
+        document.querySelector('#plus').disabled = shopper.wallet >= MAX_WALLET
+
+        let promoMessage = ''
+        if (promoIsValid) {
+          promoMessage = `Code applied — you save $${discount.toFixed(2)}`
+        } else if (promoCode !== '') {
+          promoMessage = 'Not a valid code'
+        }
+        document.querySelector('#promo-msg').textContent = promoMessage
+        document.querySelector('#promo-msg').className = promoIsValid ? 'promo-msg ok' : 'promo-msg'
+
+        const isSaved = hasSave()
+        document.querySelector('#clear-save').disabled = !isSaved
+        document.querySelector('#save-note').textContent = isSaved
+          ? 'Saved: this outfit will still be here after a reload'
+          : 'Not saved: roll a new outfit to save it'
+      }
+
+      function handlePlus() {
+        if (shopper.wallet < MAX_WALLET) {
+          shopper.wallet = shopper.wallet + WALLET_STEP
+          render()
+        }
+      }
+
+      function handleMinus() {
+        if (shopper.wallet > MIN_WALLET) {
+          shopper.wallet = shopper.wallet - WALLET_STEP
+          render()
+        }
+      }
+
+      function handlePromo(event) {
+        promoCode = event.target.value.trim().toUpperCase()
+        render()
+      }
+
+      function handleRoll() {
+        rollNewOutfit()
+        saveOutfit()
+        render()
+      }
+
+      function handleReset() {
+        outfit = startingOutfit
+        shopper = { age: startingShopper.age, wallet: startingShopper.wallet }
+        promoCode = ''
+        document.querySelector('#promo').value = ''
+        render()
+      }
+
+      function handleClearSave() {
+        clearSave()
+        rollNewOutfit()
+        promoCode = ''
+        document.querySelector('#promo').value = ''
+        render()
+      }
+
+      document.querySelector('#plus').addEventListener('click', handlePlus)
+      document.querySelector('#minus').addEventListener('click', handleMinus)
+      document.querySelector('#promo').addEventListener('input', handlePromo)
+      document.querySelector('#roll').addEventListener('click', handleRoll)
+      document.querySelector('#reset').addEventListener('click', handleReset)
+      document.querySelector('#clear-save').addEventListener('click', handleClearSave)
+
+      if (!loadSave()) {
+        rollNewOutfit()
+      }
+      startingOutfit = outfit
+      startingShopper = { age: shopper.age, wallet: shopper.wallet }
+      render()
+    </script>
+  </body>
+</html>

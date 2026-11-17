@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JS Objects: deep dive</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Helvetica, sans-serif;
+        max-width: 42rem;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+        line-height: 1.6;
+        color: #16191f;
+      }
+      h1 {
+        font-size: 1.4rem;
+        border-bottom: 4px solid #16191f;
+        padding-bottom: 0.5rem;
+      }
+      code {
+        background: #eef2f7;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      #output {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 4px solid #16191f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Open the Console</h1>
+
+    <p>
+      Most of this lesson prints to the console, not to the page. Press
+      <code>Cmd + Option + J</code> on a Mac or <code>F12</code> on Windows,
+      then click the Console tab.
+    </p>
+
+    <p>Save in VS Code, then refresh here to re-run the script.</p>
+
+    <!-- Section 9 asks you to put an object on the page. These three are here
+         for that. Give them content with querySelector and textContent. -->
+    <div id="output">
+      <h2 id="line-one"></h2>
+      <p id="line-two"></p>
+      <p id="line-three"></p>
+    </div>
+
+    <script>
+      let me = {
+        name: 'Allina',
+        lives: 'Brooklyn',
+        classes: 4,
+        hasEaten: false,
+        foods: ['dumplings', 'ramen', 'mango'],
+      }
+
+      console.log(me)
+      console.log(me.name)
+      console.log(me['lives'])
+
+      let key = 'name'
+      console.log(me[key])
+      key = 'classes'
+      console.log(me[key])
+
+      console.log(me.favouriteColour)
+
+      //changing an object
+      me.classes = 5
+      me.major = 'Web Development'
+      me.foods.push('tacos')
+      console.log(me)
+
+      const constMe = { name: 'Allina' }
+      try {
+        constMe = { name: 'someone else' }
+      } catch (error) {
+        console.log('Section 4 error:', error.message)
+      }
+
+      //nested objects
+      me = {
+        name: 'Allina',
+        lives: {
+          city: 'New York',
+          borough: 'Brooklyn',
+        },
+        classes: 5,
+        hasEaten: false,
+        foods: ['dumplings', 'ramen', 'mango', 'tacos'],
+      }
+
+      console.log(me.lives.city)
+
+      try {
+        console.log(me.livs.city)
+      } catch (error) {
+        console.log('Section 5 error:', error.message)
+      }
+
+      function pickRandom(list) {
+        return list[Math.floor(Math.random() * list.length)]
+      }
+
+      const sandwiches = [
+        { name: 'BLT', price: 9.5, isVegetarian: false },
+        { name: 'Caprese', price: 11, isVegetarian: true },
+        { name: 'Banh Mi', price: 12.25, isVegetarian: false },
+        { name: 'Grilled Cheese', price: 7, isVegetarian: true },
+      ]
+
+      console.log(sandwiches[2].name)
+
+      for (let i = 0; i < sandwiches.length; i++) {
+        const veg = sandwiches[i].isVegetarian ? 'vegetarian' : 'not vegetarian'
+        console.log(`${sandwiches[i].name} costs $${sandwiches[i].price.toFixed(2)} and is ${veg}`)
+      }
+
+      const lunch = pickRandom(sandwiches)
+      console.log(`Random lunch: ${lunch.name}, $${lunch.price.toFixed(2)}`)
+
+      const order = {
+        item: 'Banh Mi',
+        price: 12.25,
+        quantity: 3,
+
+        total() {
+          return this.price * this.quantity
+        },
+
+        summary() {
+          return `${this.quantity} × ${this.item} = $${this.total().toFixed(2)}`
+        },
+      }
+
+      console.log(order.total())
+      console.log(order.summary())
+
+      order.quantity = 5
+      console.log(order.summary())
+
+      const album = {
+        title: 'Blue',
+        artist: 'Joni Mitchell',
+        year: 1971,
+      }
+
+      console.log(Object.keys(album))
+      console.log(Object.values(album))
+      console.log(Object.entries(album))
+
+      album.tracks = 10
+
+      const albumKeys = Object.keys(album)
+      for (let i = 0; i < albumKeys.length; i++) {
+        const albumKey = albumKeys[i]
+        console.log(`${albumKey}: ${album[albumKey]}`)
+      }
+
+      function render() {
+        document.querySelector('#line-one').textContent = lunch.name
+        document.querySelector('#line-two').textContent = lunch.isVegetarian ? 'Vegetarian' : 'Has meat'
+        document.querySelector('#line-three').textContent = `$${lunch.price.toFixed(2)}`
+      }
+
+      render()
+
+      lunch.price = lunch.price + 1
+      render()
+
+      localStorage.setItem('lunch', lunch)
+      console.log(localStorage.getItem('lunch'))
+
+      localStorage.setItem('lunch', JSON.stringify(lunch))
+      const savedLunch = JSON.parse(localStorage.getItem('lunch'))
+      console.log(savedLunch.name)
+      console.log(savedLunch.price + 1)
+
+      localStorage.setItem('sandwiches', JSON.stringify(sandwiches))
+      const savedSandwiches = JSON.parse(localStorage.getItem('sandwiches'))
+      console.log(savedSandwiches[1].name)
+
+      localStorage.setItem('order', JSON.stringify(order))
+      const savedOrder = JSON.parse(localStorage.getItem('order'))
+      console.log(savedOrder)
+      try {
+        savedOrder.summary()
+      } catch (error) {
+        console.log('Section 10 error:', error.message)
+      }
+
+      // figure it out: spread
+
+      const original = {
+        name: 'Allina',
+        lives: { city: 'New York', borough: 'Brooklyn' },
+      }
+
+      const copy = { ...original }
+
+      copy.name = 'Copy'
+      console.log(original.name)
+
+      copy.lives.borough = 'Queens'
+      console.log(original.lives.borough)
+    </script>
+  </body>
+</html>

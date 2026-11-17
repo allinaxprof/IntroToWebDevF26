@@ -70,7 +70,6 @@
         return Math.floor(Math.random() * (max - min + 1)) + min
       }
 
-      // --- things that never change: const ---
       const tops = [['purple tank', 15], ['white shirt', 20], ['pink blouse', 25]]
       const bottoms = [['black sweatpants', 30], ['brown slacks', 35], ['blue jeans', 20], ['grey skirt', 20], ['white shorts', 15]]
       const shoes = [['dress shoes', 50], ['sneakers', 45], ['boots', 75], ['flats', 35]]
@@ -86,7 +85,7 @@
       const PROMO_CODE = 'STYLE'
       const promoRate = 0.15
 
-      // --- STATE: everything that can change lives here, in `let` ---
+      // state
       let accent
       let age
       let wallet
@@ -95,21 +94,18 @@
       let shoe
       let promoCode = ''
 
-      // what the page looked like when it first loaded, for the reset button
       let startingOutfit
 
-      // new random facts only -- no drawing in here
       function rollNewOutfit() {
         accent = pickRandom(colours)
         age = randomBetween(14, 30)
-        wallet = randomBetween(5, 20) * WALLET_STEP // $50 to $200, in steps of $10
+        wallet = randomBetween(5, 20) * WALLET_STEP
         shirt = pickRandom(tops)
         bottom = pickRandom(bottoms)
         // ternary: students must wear dress shoes or flats
         shoe = age < 22 ? pickRandom(schoolShoes) : pickRandom(shoes)
       }
 
-      // draws the whole page from the state above
       function render() {
         const isStudent = age < 22
         const outfit = [shirt, bottom, shoe]
@@ -160,7 +156,6 @@
           ? 'Over budget'
           : `You have $${remaining.toFixed(2)} remaining`
 
-        // controls: the guard shows on the page as a disabled button
         document.querySelector('#wallet-count').textContent = `$${wallet}`
         document.querySelector('#minus').disabled = wallet <= MIN_WALLET
         document.querySelector('#plus').disabled = wallet >= MAX_WALLET
@@ -175,7 +170,6 @@
         document.querySelector('#promo-msg').className = promoIsValid ? 'promo-msg ok' : 'promo-msg'
       }
 
-      // --- handlers: change the state, then render ---
       function handlePlus() {
         if (wallet < MAX_WALLET) {
           wallet = wallet + WALLET_STEP
@@ -200,7 +194,6 @@
         render()
       }
 
-      // go further: put everything back the way it was on load
       function handleReset() {
         accent = startingOutfit.accent
         age = startingOutfit.age
@@ -209,7 +202,7 @@
         bottom = startingOutfit.bottom
         shoe = startingOutfit.shoe
         promoCode = ''
-        document.querySelector('#promo').value = '' // the input has to be cleared too
+        document.querySelector('#promo').value = ''
         render()
       }
 
